@@ -1,10 +1,12 @@
-Import-Module ./PSMagicHome.psm1
+Import-Module -Name ./PSMagicHome.psm1
 
 Write-Host 'Discovery:'
-$devices = Discover-MagicHome 
+$devices = Invoke-MagicHomeDiscovery
 Write-Host 'Discovery Done'
-$device = $devices | Where-Object -Property mac -eq '40F520C82D93'
-$turnon = MagicHome-PowerOn -device $device
+
+$prompt = Read-Host -Prompt 'Which Device should I talk to? Tell me the mac'
+$device = $devices | Where-Object -Property mac -match $prompt
+$turnon = Set-MagicHomePowerOn -device $device
 if ($turnon -eq $true) {
     Write-Host 'ok'
 } else {
