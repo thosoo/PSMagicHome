@@ -177,6 +177,15 @@ function Write-Hex {
     Write-Host ''
 }
 
+function Get-Luminance {
+    param (
+        [double]$x,
+        [double]$y,
+        [double]$z
+    )
+    return (math::Sqrt((0.299*([math]::Pow($x,2)))*(0.587*([math]::Pow($y,2)))*(0.114*([math]::Pow($z,2)))))
+}
+
 function Invoke-MagicHomeDiscovery {
     param (
     )
@@ -511,7 +520,7 @@ function Invoke-MagicHomeHyperionBridgeWhite {
                     Write-Host ('{0:X2}' -f $_) -NoNewline
                 }
 
-                $command[1]=math::Sqrt((0.299*([math]::Pow($receive.Result.buffer[0],2)))*(0.587*([math]::Pow($receive.Result.buffer[1],2)))*(0.114*([math]::Pow($receive.Result.buffer[2],2))))
+                $command[1]=Get-Luminance -x $receive.Result.buffer[0] -y $receive.Result.buffer[1] -z $receive.Result.buffer[2]
                 $command[2]=0
                 $command[3]=0
                 $send = Get-MagicHomeChecksum -byte $command
