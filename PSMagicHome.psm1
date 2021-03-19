@@ -2,13 +2,9 @@ class Devicestatus{
     [byte]$packet_id
     [byte]$device_name
     [byte]$power_status
-
-    # I'm not sure these are the correct field labels.  Basing it off of some
-    # documentation that looks like it's for a slightly different protocol.
     [byte]$mode
     [byte]$run_status
     [byte]$speed
-
     [byte]$red
     [byte]$green
     [byte]$blue
